@@ -25,7 +25,7 @@ def sort_contours(cnts, method="left-to-right"):
 	# return the list of sorted contours and bounding boxes
 	return (cnts, boundingBoxes)
 
-def detect(im):
+def detect(name, im):
     # Thresholding the image
     _, thresh = cv2.threshold(im, 128, 255, cv2.THRESH_BINARY| cv2.THRESH_OTSU)
     cv2.imwrite("thresh.jpg",255-thresh)
@@ -76,11 +76,12 @@ def detect(im):
 
         idx += 1
         new_img = im[y:y+h, x:x+w]
-        cv2.imwrite("./img/output/{}.png".format(idx), new_img)
+        cv2.imwrite("./img/output/{}.png".format(name+str(idx)), new_img)
 
 def app():
-    img = cv2.imread("./img/input/test.png", 0)
-    detect(img)
+    for name in ["test1", "test2"]:
+        img = cv2.imread("./img/input/{}.png".format(name), 0)
+        detect(name, img)
     print("done")
 
 if __name__ == "__main__":
